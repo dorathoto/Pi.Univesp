@@ -66,6 +66,8 @@ namespace Pi.Univesp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "DisciplinaId", "DisciplinaId", nota.DisciplinaId);
+            ViewData["AlunoId"] = new SelectList(_context.Alunos, "AlunoId", "Nome", nota.AlunoId);
+
             return View(nota);
         }
 
@@ -83,6 +85,8 @@ namespace Pi.Univesp.Controllers
                 return NotFound();
             }
             ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "DisciplinaId", "DisciplinaId", nota.DisciplinaId);
+            ViewData["AlunoId"] = new SelectList(_context.Alunos, "AlunoId", "Nome", nota.AlunoId);
+
             return View(nota);
         }
 

@@ -1,0 +1,44 @@
+﻿@model Pi.Univesp.Models.Aluno
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Estatística</h1>
+
+<div>
+    <h4>Aluno: @Model.Nome</h4>
+    <hr />
+    <canvas id="myChart"></canvas>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.AlunoId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        const labels = [ @Html.Raw(ViewData["Meses"])        ];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Notas Histórico',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [@Html.Raw(ViewData["Notas"])],
+            }]
+        };
+
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {}
+        };
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
+}

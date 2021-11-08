@@ -43,6 +43,40 @@ namespace Pi.Univesp.Controllers
             return View(aluno);
         }
 
+        public async Task<IActionResult> Stats(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var aluno = await _context.Alunos
+                .Include(i => i.Notas)
+                .ThenInclude(i => i.Disciplina)
+                .FirstOrDefaultAsync(m => m.AlunoId == id);
+
+            if (aluno == null)
+            {
+                return NotFound();
+            }
+            var meses = "";
+            foreach (var item in aluno.Notas)
+            {
+                meses += $",'{item.Data:MMM}'";
+            }
+            ViewData["Meses"] = meses;
+
+
+            var notas = "";
+            foreach (var item in aluno.Notas)
+            {
+                notas += $",'{item.ValorNota}'";
+            }
+            ViewData["Notas"] = notas;
+
+            return View(aluno);
+        }
+
         // GET: Alunos/Create
         public IActionResult Create()
         {
