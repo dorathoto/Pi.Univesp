@@ -10,11 +10,11 @@ using Pi.Univesp.Models;
 
 namespace Pi.Univesp.Controllers
 {
-    public class AlunoesController : Controller
+    public class AlunosController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AlunoesController(ApplicationDbContext context)
+        public AlunosController(ApplicationDbContext context)
         {
             _context = context;
         }
