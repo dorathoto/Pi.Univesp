@@ -1,4 +1,6 @@
-﻿namespace Pi.Univesp.Models
+﻿using System.Collections.Generic;
+
+namespace Pi.Univesp.Models
 {
     public class Aluno
     {
@@ -9,9 +11,8 @@
 
         public int RA { get; set; }
 
+        public virtual ICollection<Nota> Notas { get; set; }
 
-        // diferença entre float e decimal no C#
-        public float Nota { get; set; }
 
     }
 }

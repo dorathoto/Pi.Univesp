@@ -15,5 +15,7 @@ namespace Pi.Univesp.Data
         }
 
         public DbSet<Aluno> Alunos { get; set; }
+        public DbSet<Disciplina> Disciplinas { get; set; }
+
     }
 }
