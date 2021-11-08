@@ -1,6 +1,4 @@
-using System;
-
-namespace Pi.Univesp.Models
+namespace Pi.Univesp
 {
     public class ErrorViewModel
     {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Pi.Univesp.Models
+﻿namespace Pi.Univesp.Models
 {
     public class Aluno
     {
@@ -18,6 +12,6 @@ namespace Pi.Univesp.Models
 
         // diferença entre float e decimal no C#
         public float Nota { get; set; }
-        
+
     }
 }
