@@ -13,6 +13,7 @@ namespace Pi.Univesp.Models
 
         public Guid DisciplinaId { get; set; }
 
+        public float ValorNota { get; set; }
         public DateTime Data { get; set; }
 
         public virtual Disciplina Disciplina { get; set; }
