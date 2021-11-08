@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pi.Univesp.Data;
 
 namespace Pi.Univesp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211108153654_modelsNotas")]
+    partial class modelsNotas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,9 +269,6 @@ namespace Pi.Univesp.Data.Migrations
 
                     b.Property<Guid>("DisciplinaId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<float>("ValorNota")
-                        .HasColumnType("real");
 
                     b.HasKey("NotaId");
 

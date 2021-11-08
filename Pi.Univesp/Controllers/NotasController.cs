@@ -10,22 +10,23 @@ using Pi.Univesp.Models;
 
 namespace Pi.Univesp.Controllers
 {
-    public class AlunosController : Controller
+    public class NotasController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AlunosController(ApplicationDbContext context)
+        public NotasController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Alunos
+        // GET: Notas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Alunos.ToListAsync());
+            var applicationDbContext = _context.Nota.Include(n => n.Disciplina);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Alunos/Details/5
+        // GET: Notas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,73 +34,44 @@ namespace Pi.Univesp.Controllers
                 return NotFound();
             }
 
-            var aluno = await _context.Alunos
-                .FirstOrDefaultAsync(m => m.AlunoId == id);
-            if (aluno == null)
+            var nota = await _context.Nota
+                .Include(n => n.Disciplina)
+                .FirstOrDefaultAsync(m => m.NotaId == id);
+            if (nota == null)
             {
                 return NotFound();
             }
 
-            return View(aluno);
+            return View(nota);
         }
 
-        public async Task<IActionResult> Stats(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var aluno = await _context.Alunos
-                .Include(i => i.Notas)
-                .ThenInclude(i => i.Disciplina)
-                .FirstOrDefaultAsync(m => m.AlunoId == id);
-
-            if (aluno == null)
-            {
-                return NotFound();
-            }
-            var meses = "";
-            foreach (var item in aluno.Notas)
-            {
-                meses += $",'{item.Data:MMM}'";
-            }
-            ViewData["Meses"] = meses;
-
-
-            var notas = "";
-            foreach (var item in aluno.Notas)
-            {
-                notas += $",'{item.ValorNota}'";
-            }
-            ViewData["Notas"] = notas;
-
-            return View(aluno);
-        }
-
-        // GET: Alunos/Create
+        // GET: Notas/Create
         public IActionResult Create()
         {
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "DisciplinaId", "Nome");
+            ViewData["AlunoId"] = new SelectList(_context.Alunos, "AlunoId", "Nome");
             return View();
+
         }
 
-        // POST: Alunos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AlunoId,Nome,RA")] Aluno aluno)
+        public async Task<IActionResult> Create([Bind("NotaId,AlunoId,DisciplinaId,ValorNota,Data")] Nota nota)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(aluno);
+                _context.Add(nota);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(aluno);
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "DisciplinaId", "DisciplinaId", nota.DisciplinaId);
+            ViewData["AlunoId"] = new SelectList(_context.Alunos, "AlunoId", "Nome", nota.AlunoId);
+
+            return View(nota);
         }
 
-        // GET: Alunos/Edit/5
+        // GET: Notas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -107,22 +79,25 @@ namespace Pi.Univesp.Controllers
                 return NotFound();
             }
 
-            var aluno = await _context.Alunos.FindAsync(id);
-            if (aluno == null)
+            var nota = await _context.Nota.FindAsync(id);
+            if (nota == null)
             {
                 return NotFound();
             }
-            return View(aluno);
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "DisciplinaId", "DisciplinaId", nota.DisciplinaId);
+            ViewData["AlunoId"] = new SelectList(_context.Alunos, "AlunoId", "Nome", nota.AlunoId);
+
+            return View(nota);
         }
 
-        // POST: Alunos/Edit/5
+        // POST: Notas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AlunoId,Nome,RA")] Aluno aluno)
+        public async Task<IActionResult> Edit(int id, [Bind("NotaId,AlunoId,DisciplinaId,ValorNota,Data")] Nota nota)
         {
-            if (id != aluno.AlunoId)
+            if (id != nota.NotaId)
             {
                 return NotFound();
             }
@@ -131,12 +106,12 @@ namespace Pi.Univesp.Controllers
             {
                 try
                 {
-                    _context.Update(aluno);
+                    _context.Update(nota);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AlunoExists(aluno.AlunoId))
+                    if (!NotaExists(nota.NotaId))
                     {
                         return NotFound();
                     }
@@ -147,10 +122,11 @@ namespace Pi.Univesp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(aluno);
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "DisciplinaId", "DisciplinaId", nota.DisciplinaId);
+            return View(nota);
         }
 
-        // GET: Alunos/Delete/5
+        // GET: Notas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -158,30 +134,31 @@ namespace Pi.Univesp.Controllers
                 return NotFound();
             }
 
-            var aluno = await _context.Alunos
-                .FirstOrDefaultAsync(m => m.AlunoId == id);
-            if (aluno == null)
+            var nota = await _context.Nota
+                .Include(n => n.Disciplina)
+                .FirstOrDefaultAsync(m => m.NotaId == id);
+            if (nota == null)
             {
                 return NotFound();
             }
 
-            return View(aluno);
+            return View(nota);
         }
 
-        // POST: Alunos/Delete/5
+        // POST: Notas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var aluno = await _context.Alunos.FindAsync(id);
-            _context.Alunos.Remove(aluno);
+            var nota = await _context.Nota.FindAsync(id);
+            _context.Nota.Remove(nota);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AlunoExists(int id)
+        private bool NotaExists(int id)
         {
-            return _context.Alunos.Any(e => e.AlunoId == id);
+            return _context.Nota.Any(e => e.NotaId == id);
         }
     }
 }
