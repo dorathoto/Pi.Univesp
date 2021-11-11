@@ -35,6 +35,9 @@ namespace Pi.Univesp.Controllers
 
             var aluno = await _context.Alunos
                 .FirstOrDefaultAsync(m => m.AlunoId == id);
+
+
+            
             if (aluno == null)
             {
                 return NotFound();

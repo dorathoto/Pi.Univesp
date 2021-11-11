@@ -16,6 +16,7 @@ namespace Pi.Univesp.Models
         public float ValorNota { get; set; }
         public DateTime Data { get; set; }
 
+        public virtual Aluno Aluno { get; set; }
         public virtual Disciplina Disciplina { get; set; }
     }
 }
