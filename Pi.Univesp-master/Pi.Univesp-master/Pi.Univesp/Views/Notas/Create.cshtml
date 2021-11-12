@@ -1,27 +1,24 @@
 ﻿@model Pi.Univesp.Models.Nota
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Criar";
 }
 
-<h1>Edit</h1>
+<h1>Criar</h1>
 
 <h4>Nota</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="NotaId" />
             <div class="form-group">
-                <label asp-for="AlunoId" class="control-label"></label>
-                <select asp-for="AlunoId" class="form-control" asp-items="ViewBag.AlunoId"></select>
-                <span asp-validation-for="AlunoId" class="text-danger"></span>
+                <label asp-for="Aluno" class="control-label"></label>
+                <select asp-for="AlunoId" class ="form-control" asp-items="ViewBag.AlunoId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="DisciplinaId" class="control-label"></label>
-                <select asp-for="DisciplinaId" class="form-control" asp-items="ViewBag.DisciplinaId"></select>
-                <span asp-validation-for="DisciplinaId" class="text-danger"></span>
+                <label asp-for="Disciplina" class="control-label"></label>
+                <select asp-for="DisciplinaId" class ="form-control" asp-items="ViewBag.DisciplinaId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="ValorNota" class="control-label"></label>
@@ -34,7 +31,7 @@
                 <span asp-validation-for="Data" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

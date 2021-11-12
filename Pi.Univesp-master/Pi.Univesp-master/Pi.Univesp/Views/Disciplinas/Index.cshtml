@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Pi.Univesp.Models.Disciplina>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Disciplinas";
 }
 
-<h1>Index</h1>
+<h1>Disciplinas</h1>
 
 <p>
     <a asp-action="Create">Criar novo</a>
@@ -25,9 +25,9 @@
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.DisciplinaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DisciplinaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DisciplinaId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.DisciplinaId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.DisciplinaId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.DisciplinaId">Excluir</a>
             </td>
         </tr>
 }

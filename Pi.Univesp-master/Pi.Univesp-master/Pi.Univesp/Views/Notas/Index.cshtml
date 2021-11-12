@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Pi.Univesp.Models.Nota>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Notas";
 }
 
-<h1>Index</h1>
+<h1>Notas</h1>
 
 <p>
     <a asp-action="Create">Criar novo</a>
@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.Data)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Disciplina)
+                @Html.DisplayNameFor(model => model.Disciplina.Nome)
             </th>
             <th></th>
         </tr>
@@ -34,12 +34,12 @@
                 @Html.DisplayFor(modelItem => item.Data)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Disciplina.DisciplinaId)
+                @Html.DisplayFor(modelItem => item.Disciplina.Nome)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.NotaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.NotaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.NotaId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.NotaId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.NotaId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.NotaId">Excluir</a>
             </td>
         </tr>
 }
